@@ -43,16 +43,27 @@ def next_month(d):
     next_month = last + timedelta(days=1)
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
-
-def event(request, event_id=None):
-    instance = Event()
-    if event_id:
-        instance = get_object_or_404(Event, pk=event_id)
-    else:
-        instance = Event()
     
+def new(request):
+    instance = Event()
     form = EventForm(request.POST or None, instance=instance)
     if request.POST and form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('cal_app:calendar'))
     return render(request, 'cal_app/event.html', {'form': form})
+
+def edit(request, event_id):
+    instance = get_object_or_404(Event, pk=event_id)
+    form = EventForm(request.POST or None, instance=instance)
+    if request.POST and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('cal_app:calendar'))
+    return render(request, 'cal_app/edit.html', {'form': form, 'event_id': event_id})
+
+def delete(request, event_id=None):
+    if event_id:
+        instance = get_object_or_404(Event, pk=event_id)
+        instance.delete()
+    else:
+        return HttpResponseRedirect(reverse('cal_app:calendar'))
+    return HttpResponseRedirect(reverse('cal_app:calendar'))
