@@ -9,15 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'cal_app/styles.css' %}">
 </head>
 <body>
-  {% if user.is_authenticated %}
-    <nav> 
-      <h1>Hello {{ user.get_username }}</h1>
-      <a href="{% url 'logout'%}?next={{request.path}}">Logout</a>
-    </nav>
-  {% else %}
-    <nav> <a href="{% url 'login' %}?next={{request.path}}">Login</a></nav>
-  {% endif %}
-
+  
     {% block content %}
     {% endblock %}
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

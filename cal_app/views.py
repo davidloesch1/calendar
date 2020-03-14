@@ -7,9 +7,11 @@ import calendar
 from .forms import EventForm
 from .models import *
 from .utils import Calendar
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return HttpResponse('hello')
+
 
 class CalendarView(generic.ListView):
     model = Event
@@ -44,6 +46,7 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
     
+@login_required
 def new(request):
     instance = Event()
     form = EventForm(request.POST or None, instance=instance)
@@ -52,6 +55,7 @@ def new(request):
         return HttpResponseRedirect(reverse('cal_app:calendar'))
     return render(request, 'cal_app/event.html', {'form': form})
 
+@login_required
 def edit(request, event_id):
     instance = get_object_or_404(Event, pk=event_id)
     form = EventForm(request.POST or None, instance=instance)
@@ -60,6 +64,7 @@ def edit(request, event_id):
         return HttpResponseRedirect(reverse('cal_app:calendar'))
     return render(request, 'cal_app/edit.html', {'form': form, 'event_id': event_id})
 
+@login_required
 def delete(request, event_id=None):
     if event_id:
         instance = get_object_or_404(Event, pk=event_id)
