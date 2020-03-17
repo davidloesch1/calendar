@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
+import dj_database_url
+import dotenv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,6 +28,7 @@ SECRET_KEY = '#u=(6)y62zn_6b=x%l&t1smm4lh@c&97+cs4klhbfs2ab9*!ux'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '0.0.0.0', 'localhost', 'https://shielded-wildwood-53869.herokuapp.com/'
 ]
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
@@ -34,7 +37,6 @@ LOGIN_REDIRECT_URL = '/calendar'
 # Application definition
 
 INSTALLED_APPS = [
-    'cal_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'cal_app',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'cal_django.urls'
@@ -84,15 +88,13 @@ try:
 except ImportError:
    pass
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'calendar',
-        'USER': 'david',
-        'PASSWORD': DATABASE_PASSWORD,
-        'HOST':'localhost'
-    }
-}
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'calendar',
+        # 'USER': 'david',
+        # 'PASSWORD': DATABASE_PASSWORD,
+        # 'HOST':'localhost'
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -138,7 +140,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = ('static',)
 
@@ -162,8 +164,13 @@ SITE_ID = 1
 # ACCOUNT_UNIQUE_EMAIL = True
 
 # Heroku: Update database configuration from $DATABASE_URL.
-import dj_database_url
+
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 django_heroku.settings(locals())
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+
+# del DATABASES['default']['OPTIONS']['sslmode']
