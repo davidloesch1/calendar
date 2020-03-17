@@ -1,7 +1,12 @@
+body {
+  background-color: lightgray;
+}
 .calendar {
-    width: 98%;
+    width: auto;
+    height: auto;
     margin: auto;
     font-size: 13px;
+    background-color: whitesmoke;
   }
   
   .calendar tr, .calendar td {
@@ -48,7 +53,7 @@
   .btn {
     outline: none;
     color: black;
-    background-color: transparent;
+    background-color: white;
     box-shadow: 0 0 0 0;
   }
   
@@ -58,20 +63,52 @@
 
   .form {
     margin: auto;
-  }
+    margin-top: 2%;
+    width: 90%;
+    max-width: 500px;
+    padding: 40px;
+}
   
-  .form input, .form select, .form textarea {
+  .form input, .form select, .form textarea .login{
     border-radius: 5px;
     border: 1px solid #17a2b8;
-    background: none;
+    background-color: white;
     padding: 5px;
     width: 100%;
   }
-
+  .form-table > tbody > tr > td > textarea {
+    border-radius: 5px;
+    border: 1px solid #17a2b8;
+    background-color: white;
+    padding: 5px;
+    width: 100%;
+  }
   .signup > ul {
     height: auto;
   }
 
   .signup > p > input {
     border: 1px solid black;
+  }
+  .header {
+    width: 98%;
+    margin: auto;
+  }
+
+  .event-card {
+    text-decoration: none;
+    background-color: lightblue;
+    color: black;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    font-size: medium;
+  }
+  .event-li {
+    list-style: none;
+    margin-right: auto 5px auto auto;
+  }
+  .event-li >
+  .event-ul {
+    padding: 0;
+    list-style-type: none;
   }

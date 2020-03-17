@@ -10,14 +10,15 @@
 </head>
 <body>
   {% if user.is_authenticated %}
-    <nav> 
+    <nav class="header"> 
       <h1>Hello {{ user.get_username }}</h1>
-      <a href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+      <a class="btn btn-secondary btn-lg" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
     </nav>
   {% else %}
-    <nav> 
-      <a href="{% url 'login' %}?next={{request.path}}">Login</a>
-      <a href="{% url 'cal_app:signup' %}?next={{request.path}}">Sign Up</a>
+    <nav class="header"> 
+      <h1>Calendar</h1>
+      <a class="btn btn-secondary btn-lg" href="{% url 'login' %}?next={{request.path}}">Login</a>
+      <a class="btn btn-secondary btn-lg" href="{% url 'cal_app:signup' %}?next={{request.path}}">Sign Up</a>
     </nav>
   {% endif %}
 
