@@ -15,7 +15,10 @@
       <a href="{% url 'logout'%}?next={{request.path}}">Logout</a>
     </nav>
   {% else %}
-    <nav> <a href="{% url 'login' %}?next={{request.path}}">Login</a></nav>
+    <nav> 
+      <a href="{% url 'login' %}?next={{request.path}}">Login</a>
+      <a href="{% url 'cal_app:signup' %}?next={{request.path}}">Sign Up</a>
+    </nav>
   {% endif %}
 
     {% block content %}
