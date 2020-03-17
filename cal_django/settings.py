@@ -78,16 +78,21 @@ WSGI_APPLICATION = 'cal_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+DATABASE_PASSWORD = ''
+try:
+   from dev_settings import *
+except ImportError:
+   pass
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'calendar',
         'USER': 'david',
-        'PASSWORD': 'Yikapav3',
+        'PASSWORD': DATABASE_PASSWORD,
         'HOST':'localhost'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
