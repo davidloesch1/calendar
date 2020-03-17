@@ -1,1 +1,1 @@
-web: gunicorn cal_django/wsgi.py --log-file -
+web: gunicorn cal_django.wsgi --log-file -
